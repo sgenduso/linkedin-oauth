@@ -1,3 +1,5 @@
+var session = require('cookie-session');
+require('dotenv').load();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -21,6 +23,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session(
+  { keys:
+    [process.env.SESSION_KEY1,
+     process.env.SESSION_KEY2
+    ]
+  }
+  ));
 
 app.use('/', routes);
 app.use('/users', users);
